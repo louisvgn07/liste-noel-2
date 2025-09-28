@@ -13,6 +13,14 @@
       background: url('https://www.transparenttextures.com/patterns/stardust.png'), #fff9f2;
       background-size: contain;
       min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* --- TITRE CLIGNOTANT --- */
+    @keyframes blink {
+      0%, 100% { color: #e74c3c; }
+      50% { color: #27ae60; }
     }
 
     h1 {
@@ -20,14 +28,28 @@
       font-size: 40px;
       color: #c0392b;
       margin-bottom: 40px;
+      animation: blink 2s infinite;
     }
 
+    /* --- CONTENEUR GRILLE --- */
     .items-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
       max-width: 1200px;
       margin: 0 auto;
+    }
+
+    /* --- ANIMATION APPARITION CARTE --- */
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     .item {
@@ -37,11 +59,17 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       text-align: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+      /* delay à mettre via inline style dans HTML */
     }
 
+    /* --- SURVOL GLOW FESTIF --- */
     .item:hover {
       transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      box-shadow:
+        0 0 20px rgba(255, 0, 100, 0.3),
+        0 0 30px rgba(255, 200, 0, 0.3);
     }
 
     .item img {
@@ -66,6 +94,7 @@
       color: #7f8c8d;
     }
 
+    /* --- BOUTONS PULSANTS --- */
     .btn {
       display: inline-block;
       margin-top: 15px;
@@ -75,19 +104,55 @@
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
     .btn:hover {
       background-color: #c0392b;
+      transform: scale(1.05);
     }
 
-    /* Optionnel : neige avec emoji en bas */
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 24px;
-      color: #aaa;
+    /* --- FLOCONS DE NEIGE --- */
+    .snowflakes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 9999;
+    }
+
+    .snowflake {
+      color: #fff;
+      font-size: 1.5em;
+      position: absolute;
+      top: -10px;
+      user-select: none;
+      animation-name: fall, sway;
+      animation-timing-function: linear, ease-in-out;
+      animation-iteration-count: infinite, infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    @keyframes sway {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(20px);
+      }
     }
   </style>
 </head>
@@ -95,63 +160,75 @@
   <h1>🎄 Ma liste de Noël 🎁</h1>
 
   <div class="items-container">
-    <div class="item">
+    <div class="item" style="animation-delay: 0s">
       <img src="https://boulanger.scene7.com/is/image/Boulanger/0195950643435_h_f_l_0?wid=508&hei=508&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=png-alpha" alt="iPhone 17" />
       <h2>📱 iPhone 17</h2>
       <p>Iphone 17 256Go – sur Apple</p>
       <a class="btn" href="https://www.apple.com/fr/shop/buy-iphone/iphone-17" target="_blank">Je l’achète</a>
     </div>
 
-    <div class="item">
+    <div class="item" style="animation-delay: 0.1s">
       <img src="https://ferrari-cdn.thron.com/delivery/public/image/ferrari/c5c05e0c-5bcf-4735-b539-406781eba945/3zayf6/std/0x1000/NPO157014-ZFF83CMB000232151_E_L3?quality=auto-high&format=auto" alt="Ferrari 812" />
       <h2>🏎️ Ferrari 812 Superfast</h2>
       <p>Voiture jeune permis, 880ch pack Estrattore Post. Nero</p>
       <a class="btn" href="https://preowned.ferrari.com/fr-FR/a/europe/ferrari-occasion/france/sf-c-te-d-azur-cannes/812-superfast/ZFF83CMB000232151-1754466189986" target="_blank">Je l’achète</a>
     </div>
 
-    <div class="item">
+    <div class="item" style="animation-delay: 0.2s">
       <img src="https://make-it-shine.com/cdn/shop/files/DSC08151.jpg?v=1745594005&width=990" alt="Bracelet flower" />
       <h2>💎 Bracelet Flower</h2>
       <p>Bracelet Flower - sur Make It Shine</p>
       <a class="btn" href="https://make-it-shine.com/products/bracelet-flower-tennis-argent-homme" target="_blank">Je l’achète</a>
     </div> 
 
-    <div class="item">
+    <div class="item" style="animation-delay: 0.3s">
       <img src="https://cdn.shopify.com/s/files/1/0274/8717/files/product-card_solidx_iphone-17_300x@2x.png" alt="Coque iPhone" />
       <h2>📱 Coque iPhone</h2>
       <p>Coque Bigo - sur Rhinoshield</p>
       <a class="btn" href="https://rhinoshield.fr/products/solidsuit/buy?identification=solidsuit&device=iphone-17&device_color=silver&product_line=224&spec=52" target="_blank">Je l’achète</a>
     </div> 
 
-    <div class="item">
+    <div class="item" style="animation-delay: 0.4s">
       <img src="https://animeillume.com/cdn/shop/files/8_09265610-67b5-4701-87d6-ecb652d4f23b.png?v=1758083704&width=360" alt="Coque AirPods" />
       <h2>🎧 Coque AirPods</h2>
       <p>Coque AirPods – sur AnimeIllumine</p>
       <a class="btn" href="https://animeillume.com/products/headphone-protective-case-24" target="_blank">Je l’achète</a>
     </div>
 
-    <div class="item">
+    <div class="item" style="animation-delay: 0.5s">
       <img src="https://m1.nutripure.fr/2178-xlarge_defaut/whey-isolate-native.jpg" alt="Whey isolate" />
       <h2>💪 Whey isolate</h2>
       <p>Protéine native - Nutripure</p>
       <a class="btn" href="https://www.nutripure.fr/fr/musculation/13-690-whey-isolate-native.html#/100-poids_poudre-sachet_750g" target="_blank">Je l’achète</a>
     </div>
 
-    <div class="item">
+    <div class="item" style="animation-delay: 0.6s">
       <img src="https://m2.nutripure.fr/3908-xlarge_defaut/creatine-monohydrate-creapure.jpg" alt="Créatine" />
-      <h2>⚡ Créatine Creapure</h2>
-      <p>Créatine monohydrate - Nutripure</p>
+      <h2>⚡ Créatine</h2>
+      <p>Monohydrate Creapure - Nutripure</p>
       <a class="btn" href="https://www.nutripure.fr/fr/musculation/16-741-creatine-monohydrate-creapure.html#/230-poids_poudre-3x150_gelules_3_mois" target="_blank">Je l’achète</a>
     </div>
 
-    <div class="item">
+    <div class="item" style="animation-delay: 0.7s">
       <img src="https://m1.nutripure.fr/4534-xlarge_defaut/pastille-hydratation.jpg" alt="Électrolytes" />
       <h2>💧 Électrolytes</h2>
-      <p>Pastilles hydratation - Nutripure</p>
+      <p>Pastille hydratation - Nutripure</p>
       <a class="btn" href="https://www.nutripure.fr/fr/endurance/279-1311-pastille-hydratation.html#/399-electrolytes_format-1_etui_15_a_30_doses" target="_blank">Je l’achète</a>
     </div>
   </div>
 
-  <footer>❄️ Joyeux Noël ❄️</footer>
+  <!-- FLOCONS DE NEIGE -->
+  <div class="snowflakes" aria-hidden="true">
+    <div class="snowflake" style="left: 10%; animation-duration: 10s; animation-delay: 0s;">❄</div>
+    <div class="snowflake" style="left: 20%; animation-duration: 12s; animation-delay: 2s;">❅</div>
+    <div class="snowflake" style="left: 30%; animation-duration: 9s; animation-delay: 4s;">❆</div>
+    <div class="snowflake" style="left: 40%; animation-duration: 11s; animation-delay: 1s;">❄</div>
+    <div class="snowflake" style="left: 50%; animation-duration: 10s; animation-delay: 3s;">❅</div>
+    <div class="snowflake" style="left: 60%; animation-duration: 12s; animation-delay: 5s;">❆</div>
+    <div class="snowflake" style="left: 70%; animation-duration: 9s; animation-delay: 2s;">❄</div>
+    <div class="snowflake" style="left: 80%; animation-duration: 11s; animation-delay: 4s;">❅</div>
+    <div class="snowflake" style="left: 90%; animation-duration: 10s; animation-delay: 1s;">❆</div>
+  </div>
+
 </body>
 </html>
